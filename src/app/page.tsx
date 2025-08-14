@@ -1,103 +1,209 @@
-import Image from "next/image";
+"use client";
+import { useEffect, useState } from "react";
+import Carl from "./components/creepycarl";
+import { getSong, Track } from "./api/spotify";
+import { getLatestLichessGame, LichessGame } from "./api/lichess";
+import { getLatestRun, StravaRun } from "./api/strava";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [recentTrack, setRecentTrack] = useState<Track | null>(null);
+  const [latestGame, setLatestGame] = useState<LichessGame | null>(null);
+  const [latestRun, setLatestRun] = useState<StravaRun | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    const fetchRecentTrack = async () => {
+      try {
+        const track = await getSong();
+        setRecentTrack(track);
+      } catch (err) {
+        console.error("Failed to fetch track:", err);
+        setError("Failed to load recent tracks");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const fetchGame = async () => {
+      const game = await getLatestLichessGame("Dilligrout");
+      setLatestGame(game);
+    };
+
+    const fetchRun = async () => {
+      const run = await getLatestRun();
+      setLatestRun(run);
+    };
+
+    fetchRecentTrack();
+    fetchGame();
+    fetchRun();
+
+    // // Optional: Refresh every 1 minute
+    // const interval = setInterval(fetchRecentTrack, 1 * 60 * 1000);
+    // return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="flex flex-col h-screen">
+      <div className="flex flex-col m-auto relative">
+        <h1 className="font-merriweatherBold text-3xl mb-4">
+          Hello, I&apos;m Carl Hu!
+        </h1>
+        <div className="description">
+          <p className="mb-2">
+            I&apos;m a rising sophomore studying CS at Cornell. I&apos;m
+            interested in web and app development. <br />
+            Outside of coding, I like playing tennis, viola, and going to the
+            gym.
+          </p>
+          <p className="mb-3">I recently...</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="max-w-[450px]">
+          <ul className="api text-sm space-y-3">
+            <li>
+              <span className="mr-[12.8px] text-[#cccccc]">{">"}</span>
+              {loading ? (
+                "Loading song..."
+              ) : error ? (
+                <span className="text-red-500">{error}</span>
+              ) : recentTrack ? (
+                <>
+                  listened to{" "}
+                  <a
+                    href={recentTrack.songUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    {recentTrack.name}
+                  </a>{" "}
+                  by{" "}
+                  {recentTrack.artists.map((artist, idx) => (
+                    <span key={artist.url}>
+                      <a
+                        href={artist.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline"
+                      >
+                        {artist.name}
+                      </a>
+                      {idx < recentTrack.artists.length - 1 && ", "}
+                    </span>
+                  ))}{" "}
+                  ({recentTrack.timeAgo})
+                </>
+              ) : (
+                "No recent tracks"
+              )}
+            </li>
+            <li>
+              <span className="mr-[12.8px] text-[#cccccc] text-opacity-0">
+                {">"}
+              </span>
+              {latestGame ? (
+                <>
+                  {latestGame.result === "win"
+                    ? "won"
+                    : latestGame.result === "loss"
+                    ? "lost"
+                    : "drew"}{" "}
+                  a{" "}
+                  <a
+                    href={latestGame.gameUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    {[
+                      "atomic",
+                      "horde",
+                      "chess960",
+                      "crazyhouse",
+                      "kingofthehill",
+                      "threecheck",
+                      "antichess",
+                      "racingkings",
+                      "bughouse",
+                    ].includes(latestGame.type.toLowerCase())
+                      ? `${latestGame.type
+                          .replace(/([A-Z])/g, " $1")
+                          .replace(/^./, (str) => str.toUpperCase())
+                          .trim()} game`
+                      : `${latestGame.type} game`}
+                  </a>{" "}
+                  against{" "}
+                  <a
+                    href={`https://lichess.org/@/${latestGame.opponent}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    {latestGame.opponent}
+                  </a>{" "}
+                  ({latestGame.timeAgo})
+                </>
+              ) : (
+                "Loading game..."
+              )}
+            </li>
+            <li>
+              <span className="mr-[12.8px] text-[#cccccc]">{">"}</span>
+              {latestRun ? (
+                <>
+                  ran{" "}
+                  <a
+                    href={latestRun.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    {latestRun.distanceMiles} miles
+                  </a>{" "}
+                  in {latestRun.elapsedTime}
+                  {" "}
+                  ({latestRun.timeAgo})
+                </>
+              ) : (
+                "Loading run..."
+              )}
+            </li>
+          </ul>
+        </div>
+        <p className="description mt-6 mb-7">
+          Feel free to{" "}
+          <a className="email" href="mailto:cjh353@cornell.edu">
+            reach out
+          </a>
+          ! 🤗
+        </p>
+        <div className="description">
+          <div className="flex">
+            <a
+              href="https://github.com/carlhuu"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button className="border border-[#56a8ff] bg-[#56a8ff] cursor-pointer mr-3 p-2 px-7 text-white">
+                GitHub
+              </button>
+            </a>
+            <a
+              href="https://linkedin.com/in/carl-hu"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button className="border cursor-pointer mr-3 p-2 px-6 text-[#56a8ff]">
+                LinkedIn
+              </button>
+            </a>
+          </div>
+        </div>{" "}
+        <div className="absolute right-0 bottom-0 w-[250px] h-[250px]">
+          <Carl />
+        </div>
+      </div>
     </div>
   );
 }
