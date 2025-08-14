@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "deploy": "npm run build && gh-pages -d out"
+  "export": "next export",
+  "start": "next start" 
   },
   "dependencies": {
     "@react-three/drei": "^10.5.2",
