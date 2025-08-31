@@ -35,25 +35,32 @@ function formatTime(seconds: number): string {
 }
 
 export const getLatestRun = async (): Promise<StravaRun | null> => {
-    const accessToken = await getAccessToken();
-  try {
+  const accessToken = await getAccessToken();
+
+  let page = 1;
+  while (page < 5) { 
     const response = await axios.get(
-      "https://www.strava.com/api/v3/athlete/activities?per_page=1",
+      `https://www.strava.com/api/v3/athlete/activities?per_page=20&page=${page}`,
       { headers: { Authorization: `Bearer ${accessToken}` } }
     );
-    const activity = response.data[0];
-    if (!activity || activity.type !== "Run") return null;
 
-    return {
-      distanceMiles: Math.floor((activity.distance / 1609.34) * 100) / 100, // Convert meters to miles
-      elapsedTime: formatTime(activity.elapsed_time),
-      url: `https://www.strava.com/activities/${activity.id}`,
-      timeAgo: formatTimeAgo(activity.start_date),
-    };
-  } catch (error) {
-    console.error("Error fetching Strava run:", error);
-    return null;
+    const activities = response.data;
+    if (!activities.length) break; // 
+
+    const run = activities.find((a: any) => a.type === "Run");
+    if (run) {
+      return {
+        distanceMiles: Math.floor((run.distance / 1609.34) * 100) / 100,
+        elapsedTime: formatTime(run.elapsed_time),
+        url: `https://www.strava.com/activities/${run.id}`,
+        timeAgo: formatTimeAgo(run.start_date),
+      };
+    }
+
+    page++;
   }
+
+  return null; // no runs found
 };
 
 function formatTimeAgo(startDate: string): string {
