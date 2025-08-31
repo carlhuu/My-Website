@@ -47,6 +47,7 @@ export const getLatestRun = async (): Promise<StravaRun | null> => {
     const activities = response.data;
     if (!activities.length) break; // 
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const run = activities.find((a: any) => a.type === "Run");
     if (run) {
       return {
