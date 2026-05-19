@@ -1,7 +1,7 @@
 import Carl from "./components/creepycarl";
-import { getSong, Track } from "./api/spotify";
-import { getLatestLichessGame, LichessGame } from "./api/lichess";
-import { getLatestRun, StravaRun } from "./api/strava";
+import { getSong } from "./api/spotify";
+import { getLatestLichessGame } from "./api/lichess";
+import { getLatestRun } from "./api/strava";
 
 export default async function Home() {
   const [song, lichess, run] = await Promise.all([
@@ -18,7 +18,7 @@ export default async function Home() {
         </h1>
         <div className="description">
             <p className="mb-3 max-w-[52rem]">
-            I'm a junior studying CS at Cornell. I'm interested in consumer-facing products and quantitative software engineering. This summer, I'll be at Goldman Sachs as an Engineering Summer Analyst on the{" "}
+            I&apos;m a junior studying CS at Cornell. I&apos;m interested in consumer-facing products and quantitative software engineering. This summer, I&apos;ll be at Goldman Sachs as an Engineering Summer Analyst on the{" "}
             <a
               href="https://www.goldmansachs.com/careers/our-firm/corporate-planning-and-management"
               target="_blank"
