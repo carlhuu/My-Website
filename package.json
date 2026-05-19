@@ -5,15 +5,15 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-  "export": "next export",
-  "start": "next start" 
+    "export": "next export",
+    "start": "next start"
   },
   "dependencies": {
     "@react-three/drei": "^10.5.2",
     "@react-three/fiber": "^9.2.0",
     "axios": "^1.10.0",
     "dotenv": "^17.2.1",
-    "next": "15.4.1",
+    "next": "15.4.10",
     "qs": "^6.14.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
