@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 interface ProjectProps {
@@ -28,13 +27,7 @@ const Project: React.FC<ProjectProps> = ({
       </div>
       <Link href={imageLink} target="_blank" rel="noopener noreferrer">
         <div className="flex-shrink-0 w-[110px] h-[110px] relative overflow-hidden rounded-md border border-black">
-          <Image
-            className="object-cover"
-            src={image}
-            alt={alt}
-            fill
-            sizes="110px"
-          />
+          <img src={image} alt={alt} className="h-full w-full object-cover" />
         </div>
       </Link>
     </div>
@@ -54,7 +47,7 @@ export default function Projects() {
             title="FixYourBrokeAhhJumper"
             url="https://github.com/Etienne-Sasenarine/FixYourBrokeAhhJumper"
             description="Have you ever been on the court with your homeboy and thought, “Wow, your jumper sucks”? "
-            image="/assets/images/brokeahhjumper.png"
+            image="/assets/images/brokeahhjumper.jpg"
             imageLink="https://github.com/Etienne-Sasenarine/FixYourBrokeAhhJumper"
             alt="Screenshot of FixYourBrokeAhhJumper"
           ></Project>

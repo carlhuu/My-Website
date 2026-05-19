@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 interface ExperienceItem {
   title: string;
   company: string;
@@ -19,7 +17,11 @@ const ExperienceCard: React.FC<ExperienceItem> = ({ title, company, period, desc
       </div>
       {logo ? (
         <div className="flex-shrink-0 w-[110px] h-[110px] relative overflow-hidden rounded-md border border-black">
-          <Image src={logo} alt={`${company} logo`} fill unoptimized className="object-cover" sizes="110px"/>
+          <img
+            src={logo}
+            alt={`${company} logo`}
+            className="h-full w-full object-cover"
+          />
         </div>
       ) : null}
     </div>
