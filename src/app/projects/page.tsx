@@ -19,21 +19,21 @@ const Project: React.FC<ProjectProps> = ({
   alt,
 }) => {
   return (
-    <div className="flex items-center gap-10 mb-10">
-      <div className="w-[382px]">
-        <h2 className="font-merriweatherBold mb-2 text-xl underline sm:text-2xl">
+    <div className="flex items-center gap-8 mb-8">
+      <div className="w-[340px]">
+        <h2 className="font-merriweatherBold mb-2 text-lg underline sm:text-xl">
           <a href={url}>{title}</a>
         </h2>
-        <p className="text-sm sm:text-base">{description}</p>
+        <p className="text-xs sm:text-sm">{description}</p>
       </div>
       <Link href={imageLink} target="_blank" rel="noopener noreferrer">
-        <div className="flex-shrink-0 w-[125px] h-[125px] relative overflow-hidden rounded-md border border-black">
+        <div className="flex-shrink-0 w-[110px] h-[110px] relative overflow-hidden rounded-md border border-black">
           <Image
             className="object-cover"
             src={image}
             alt={alt}
             fill
-            sizes="125px"
+            sizes="110px"
           />
         </div>
       </Link>
@@ -43,11 +43,11 @@ const Project: React.FC<ProjectProps> = ({
 
 export default function Projects() {
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center text-base leading-relaxed sm:text-lg">
-      <div className="relative flex flex-col pt-[23.5vh] max-w-[56rem] mx-auto">
-        <h1 className="font-merriweatherBold mb-5 text-3xl sm:text-4xl">Projects</h1>
+    <div className="flex h-screen w-full flex-col items-center justify-center text-sm leading-relaxed sm:text-base">
+      <div className="relative flex flex-col pt-[23.5vh] max-w-[50rem] mx-auto">
+        <h1 className="font-merriweatherBold mb-4 text-2xl sm:text-3xl">Projects</h1>
         <div className="description">
-          <p className="mb-4 max-w-[56rem]">
+          <p className="mb-4 max-w-[50rem]">
             Maybe the real projects were the friends we made along the way...
           </p>
           <Project

@@ -10,16 +10,16 @@ interface ExperienceItem {
 
 const ExperienceCard: React.FC<ExperienceItem> = ({ title, company, period, description, logo }) => {
   return (
-    <div className="flex items-center gap-10 mb-10">
-      <div className="w-[380px]">
-        <h2 className="font-merriweatherBold mb-2 text-xl sm:text-2xl">{title}</h2>
-        <p className="text-sm sm:text-base mb-1">{company}</p>
-        <p className="text-sm sm:text-base mb-1">{period}</p>
-        <p className="text-sm sm:text-base">{description}</p>
+    <div className="flex items-center gap-8 mb-8">
+      <div className="w-[340px]">
+        <h2 className="font-merriweatherBold mb-2 text-lg sm:text-xl">{title}</h2>
+        <p className="text-xs sm:text-sm mb-1">{company}</p>
+        <p className="text-xs sm:text-sm mb-1">{period}</p>
+        <p className="text-xs sm:text-sm">{description}</p>
       </div>
       {logo ? (
-        <div className="flex-shrink-0 w-[125px] h-[125px] relative overflow-hidden rounded-md border border-black">
-          <Image src={logo} alt={`${company} logo`} fill className="object-cover" sizes="125px"/>
+        <div className="flex-shrink-0 w-[110px] h-[110px] relative overflow-hidden rounded-md border border-black">
+          <Image src={logo} alt={`${company} logo`} fill className="object-cover" sizes="110px"/>
         </div>
       ) : null}
     </div>
@@ -28,11 +28,11 @@ const ExperienceCard: React.FC<ExperienceItem> = ({ title, company, period, desc
 
 export default function Experience() {
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center text-base leading-relaxed sm:text-lg">
-      <div className="relative flex flex-col pt-[26vh] max-w-[56rem] mx-auto">
-        <h1 className="font-merriweatherBold mb-5 text-3xl sm:text-4xl">Experience</h1>
+    <div className="flex h-screen w-full flex-col items-center justify-center text-sm leading-relaxed sm:text-base">
+      <div className="relative flex flex-col pt-[26vh] max-w-[50rem] mx-auto">
+        <h1 className="font-merriweatherBold mb-4 text-2xl sm:text-3xl">Experience</h1>
         <div className="description">
-          <p className="mb-4 max-w-[56rem]">Holla at ya boi</p>
+          <p className="mb-4 max-w-[50rem]">Holla at ya boi</p>
           <ExperienceCard
             title="Engineering Summer Analyst"
             company="Goldman Sachs"

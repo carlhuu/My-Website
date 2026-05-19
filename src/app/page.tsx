@@ -11,13 +11,13 @@ export default async function Home() {
   ]);
 
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center text-base leading-relaxed sm:text-lg">
-      <div className="relative flex flex-col w-full max-w-[52rem] m-auto">
-        <h1 className="font-merriweatherBold mb-5 text-3xl sm:text-4xl">
+    <div className="flex h-screen w-full flex-col items-center justify-center text-sm leading-relaxed sm:text-base">
+      <div className="relative flex flex-col w-full max-w-[48rem] m-auto">
+        <h1 className="font-merriweatherBold mb-4 text-2xl sm:text-3xl">
           Hello, I&apos;m Carl Hu!
         </h1>
         <div className="description">
-            <p className="mb-3 max-w-[52rem]">
+            <p className="mb-3 max-w-[48rem]">
             I&apos;m a junior studying CS at Cornell. I&apos;m interested in consumer-facing products and quantitative software engineering. This summer, I&apos;ll be at Goldman Sachs as an Engineering Summer Analyst on the{" "}
             <a
               href="https://www.goldmansachs.com/careers/our-firm/corporate-planning-and-management"
@@ -31,8 +31,8 @@ export default async function Home() {
           </p>
           <p className="mb-4">I recently...</p>
         </div>
-        <div className="max-w-[40rem] sm:max-w-[48rem]">
-          <ul className="api space-y-3 text-sm sm:text-base">
+        <div className="max-w-[36rem] pr-[8rem] sm:max-w-[42rem] sm:pr-[10rem]">
+          <ul className="api space-y-3 text-xs sm:text-sm">
             <li>
               <span className="mr-[12.8px] text-[#cccccc]">{">"}</span>
               {song ? (
@@ -153,7 +153,7 @@ export default async function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="border border-[#56a8ff] bg-[#56a8ff] cursor-pointer mr-3 px-7 py-2.5 text-sm text-white sm:px-8 sm:py-3 sm:text-base">
+              <button className="border border-[#56a8ff] bg-[#56a8ff] cursor-pointer mr-3 px-6 py-2 text-xs text-white sm:px-7 sm:py-2.5 sm:text-sm">
                 GitHub
               </button>
             </a>
@@ -162,13 +162,13 @@ export default async function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="border cursor-pointer mr-3 px-6 py-2.5 text-sm text-[#56a8ff] sm:px-7 sm:py-3 sm:text-base">
+              <button className="border cursor-pointer mr-3 px-5 py-2 text-xs text-[#56a8ff] sm:px-6 sm:py-2.5 sm:text-sm">
                 LinkedIn
               </button>
             </a>
           </div>
         </div>{" "}
-        <div className="absolute right-0 bottom-0 w-[250px] h-[250px]">
+        <div className="absolute right-0 bottom-0 w-[220px] h-[220px]">
           <Carl />
         </div>
       </div>
