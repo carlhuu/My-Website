@@ -15,12 +15,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="relative min-h-screen">
-        <div className="absolute top-[5%] w-full flex z-50 pointer-events-auto justify-center">
+        <div className="absolute top-8 w-full flex z-50 pointer-events-auto justify-center">
           <div className="description text-[#9a9a9a]">
             <Link href="/">Home</Link>
-            <span className="ml-6">
-              <Link href="/projects">Projects</Link>
+            <span className="mx-6">
+              <Link href="/experience">Experience</Link>
             </span>
+            <Link href="/projects">Projects</Link>
           </div>
         </div>
         {children}

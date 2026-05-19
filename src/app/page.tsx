@@ -1,85 +1,53 @@
-"use client";
-import { useEffect, useState } from "react";
 import Carl from "./components/creepycarl";
 import { getSong, Track } from "./api/spotify";
 import { getLatestLichessGame, LichessGame } from "./api/lichess";
 import { getLatestRun, StravaRun } from "./api/strava";
 
-export default function Home() {
-  const [recentTrack, setRecentTrack] = useState<Track | null>(null);
-  const [latestGame, setLatestGame] = useState<LichessGame | null>(null);
-  const [latestRun, setLatestRun] = useState<StravaRun | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchRecentTrack = async () => {
-      try {
-        const track = await getSong();
-        setRecentTrack(track);
-      } catch (err) {
-        console.error("Failed to fetch track:", err);
-        setError("Failed to load recent tracks");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const fetchGame = async () => {
-      const game = await getLatestLichessGame("Dilligrout");
-      setLatestGame(game);
-    };
-
-    const fetchRun = async () => {
-      const run = await getLatestRun();
-      setLatestRun(run);
-    };
-
-    fetchRecentTrack();
-    fetchGame();
-    fetchRun();
-
-    // // Optional: Refresh every 1 minute
-    // const interval = setInterval(fetchRecentTrack, 1 * 60 * 1000);
-    // return () => clearInterval(interval);
-  }, []);
+export default async function Home() {
+  const [song, lichess, run] = await Promise.all([
+    getSong().catch(() => null),
+    getLatestLichessGame("Dilligrout").catch(() => null),
+    getLatestRun().catch(() => null),
+  ]);
 
   return (
-    <div className="flex flex-col h-screen">
-      <div className="flex flex-col m-auto relative">
-        <h1 className="font-merriweatherBold text-3xl mb-4">
+    <div className="flex h-screen w-full flex-col items-center justify-center text-base leading-relaxed sm:text-lg">
+      <div className="relative flex flex-col w-full max-w-[52rem] m-auto">
+        <h1 className="font-merriweatherBold mb-5 text-3xl sm:text-4xl">
           Hello, I&apos;m Carl Hu!
         </h1>
         <div className="description">
-          <p className="mb-2">
-            I&apos;m a rising sophomore studying CS at Cornell. I&apos;m
-            interested in web and app development. <br />
-            Outside of coding, I like playing tennis, viola, and going to the
-            gym.
+            <p className="mb-3 max-w-[52rem]">
+            I'm a junior studying CS at Cornell. I'm interested in consumer-facing products and quantitative software engineering. This summer, I'll be at Goldman Sachs as an Engineering Summer Analyst on the{" "}
+            <a
+              href="https://www.goldmansachs.com/careers/our-firm/corporate-planning-and-management"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              CPM Engineering
+            </a>
+            {" "}team. Outside of coding, I like playing tennis, viola, and going to the gym.
           </p>
-          <p className="mb-3">I recently...</p>
+          <p className="mb-4">I recently...</p>
         </div>
-        <div className="max-w-[450px]">
-          <ul className="api text-sm space-y-3">
+        <div className="max-w-[40rem] sm:max-w-[48rem]">
+          <ul className="api space-y-3 text-sm sm:text-base">
             <li>
               <span className="mr-[12.8px] text-[#cccccc]">{">"}</span>
-              {loading ? (
-                "Loading song..."
-              ) : error ? (
-                <span className="text-red-500">{error}</span>
-              ) : recentTrack ? (
+              {song ? (
                 <>
                   listened to{" "}
                   <a
-                    href={recentTrack.songUrl}
+                    href={song.songUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline"
                   >
-                    {recentTrack.name}
+                    {song.name}
                   </a>{" "}
                   by{" "}
-                  {recentTrack.artists.map((artist, idx) => (
+                  {song.artists.map((artist, idx) => (
                     <span key={artist.url}>
                       <a
                         href={artist.url}
@@ -89,10 +57,10 @@ export default function Home() {
                       >
                         {artist.name}
                       </a>
-                      {idx < recentTrack.artists.length - 1 && ", "}
+                      {idx < song.artists.length - 1 && ", "}
                     </span>
                   ))}{" "}
-                  ({recentTrack.timeAgo})
+                  ({song.timeAgo})
                 </>
               ) : (
                 "No recent tracks"
@@ -102,16 +70,16 @@ export default function Home() {
               <span className="mr-[12.8px] text-[#cccccc] text-opacity-0">
                 {">"}
               </span>
-              {latestGame ? (
+              {lichess ? (
                 <>
-                  {latestGame.result === "win"
+                  {lichess.result === "win"
                     ? "won"
-                    : latestGame.result === "loss"
+                    : lichess.result === "loss"
                     ? "lost"
                     : "drew"}{" "}
                   a{" "}
                   <a
-                    href={latestGame.gameUrl}
+                    href={lichess.gameUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline"
@@ -126,23 +94,23 @@ export default function Home() {
                       "antichess",
                       "racingkings",
                       "bughouse",
-                    ].includes(latestGame.type.toLowerCase())
-                      ? `${latestGame.type
+                    ].includes(lichess.type.toLowerCase())
+                      ? `${lichess.type
                           .replace(/([A-Z])/g, " $1")
                           .replace(/^./, (str) => str.toUpperCase())
                           .trim()} game`
-                      : `${latestGame.type} game`}
+                      : `${lichess.type} game`}
                   </a>{" "}
                   against{" "}
                   <a
-                    href={`https://lichess.org/@/${latestGame.opponent}`}
+                    href={`https://lichess.org/@/${lichess.opponent}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline"
                   >
-                    {latestGame.opponent}
+                    {lichess.opponent}
                   </a>{" "}
-                  ({latestGame.timeAgo})
+                  ({lichess.timeAgo})
                 </>
               ) : (
                 "Loading game..."
@@ -150,20 +118,20 @@ export default function Home() {
             </li>
             <li>
               <span className="mr-[12.8px] text-[#cccccc]">{">"}</span>
-              {latestRun ? (
+              {run ? (
                 <>
                   ran{" "}
                   <a
-                    href={latestRun.url}
+                    href={run.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline"
                   >
-                    {latestRun.distanceMiles} miles
+                    {run.distanceMiles} miles
                   </a>{" "}
-                  in {latestRun.elapsedTime}
+                  in {run.elapsedTime}
                   {" "}
-                  ({latestRun.timeAgo})
+                  ({run.timeAgo})
                 </>
               ) : (
                 "Loading run..."
@@ -185,7 +153,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="border border-[#56a8ff] bg-[#56a8ff] cursor-pointer mr-3 p-2 px-7 text-white">
+              <button className="border border-[#56a8ff] bg-[#56a8ff] cursor-pointer mr-3 px-7 py-2.5 text-sm text-white sm:px-8 sm:py-3 sm:text-base">
                 GitHub
               </button>
             </a>
@@ -194,7 +162,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="border cursor-pointer mr-3 p-2 px-6 text-[#56a8ff]">
+              <button className="border cursor-pointer mr-3 px-6 py-2.5 text-sm text-[#56a8ff] sm:px-7 sm:py-3 sm:text-base">
                 LinkedIn
               </button>
             </a>

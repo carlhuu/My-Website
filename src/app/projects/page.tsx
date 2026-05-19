@@ -19,21 +19,21 @@ const Project: React.FC<ProjectProps> = ({
   alt,
 }) => {
   return (
-    <div className="flex items-start justify-between w-full gap-6 mb-10">
-      <div className="max-w-md">
-        <h2 className="font-merriweatherBold text-2xl mb-2 underline">
+    <div className="flex items-center gap-10 mb-10">
+      <div className="w-[382px]">
+        <h2 className="font-merriweatherBold mb-2 text-xl underline sm:text-2xl">
           <a href={url}>{title}</a>
         </h2>
-        <p>{description}</p>
+        <p className="text-sm sm:text-base">{description}</p>
       </div>
       <Link href={imageLink} target="_blank" rel="noopener noreferrer">
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 w-[125px] h-[125px] relative overflow-hidden rounded-md border border-black">
           <Image
-            className="rounded-md border border-black object-cover"
+            className="object-cover"
             src={image}
             alt={alt}
-            height={125}
-            width={125}
+            fill
+            sizes="125px"
           />
         </div>
       </Link>
@@ -43,17 +43,25 @@ const Project: React.FC<ProjectProps> = ({
 
 export default function Projects() {
   return (
-    <div className="flex flex-col h-screen">
-      <div className="flex flex-col m-auto mt-[197px]">
-        <h1 className="font-merriweatherBold text-3xl mb-4 flex">Projects</h1>
-        <div className="description content-center">
-          <p className="flex mb-10">
+    <div className="flex h-screen w-full flex-col items-center justify-center text-base leading-relaxed sm:text-lg">
+      <div className="relative flex flex-col pt-[23.5vh] max-w-[56rem] mx-auto">
+        <h1 className="font-merriweatherBold mb-5 text-3xl sm:text-4xl">Projects</h1>
+        <div className="description">
+          <p className="mb-4 max-w-[56rem]">
             Maybe the real projects were the friends we made along the way...
           </p>
           <Project
+            title="FixYourBrokeAhhJumper"
+            url="https://github.com/Etienne-Sasenarine/FixYourBrokeAhhJumper"
+            description="Have you ever been on the court with your homeboy and thought, “Wow, your jumper sucks”? "
+            image="/assets/images/brokeahhjumper.png"
+            imageLink="https://github.com/Etienne-Sasenarine/FixYourBrokeAhhJumper"
+            alt="Screenshot of FixYourBrokeAhhJumper"
+          ></Project>
+          <Project
             title="Perfect Match"
             url="https://github.com/Perfect-Match-Org/perfect-match-web"
-            description="Web developer for Cornell's premier matchmaking service, used by 5,000+ Cornellians yearly"
+            description="Cornell's premier matchmaking service, used by 5,000+ Cornellians yearly"
             image="/assets/images/pm.png"
             imageLink="https://perfectmatch.ai"
             alt="Screenshot of Perfect Match"
