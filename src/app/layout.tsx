@@ -3,8 +3,21 @@ import "./globals.css";
 import Link from "next/link";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://carlhuu.vercel.app/"),
   title: "carl",
   description: "Carl Hu's website",
+  openGraph: {
+    title: "carl",
+    description: "Carl Hu's website",
+    url: "https://carlhuu.vercel.app/",
+    images: [
+      {
+        url: "/images/preview.png",
+        alt: "Carl Hu website preview",
+      },
+    ],
+    type: "website",
+  },
 };
 
 export default function RootLayout({
