@@ -19,7 +19,7 @@ const ExperienceCard: React.FC<ExperienceItem> = ({ title, company, period, desc
       </div>
       {logo ? (
         <div className="flex-shrink-0 w-[110px] h-[110px] relative overflow-hidden rounded-md border border-black">
-          <Image src={logo} alt={`${company} logo`} fill className="object-cover" sizes="110px"/>
+          <Image src={logo} alt={`${company} logo`} fill unoptimized className="object-cover" sizes="110px"/>
         </div>
       ) : null}
     </div>
@@ -38,22 +38,21 @@ export default function Experience() {
             company="Goldman Sachs"
             period="June 2026 - August 2026"
             description="CPM Engineering"
-            logo="/assets/images/goldman_sachs_logo.jfif"
+            logo="/assets/images/goldman_sachs_logo.jpg"
           />
           <ExperienceCard
             title="Developer"
             company="Hack4Impact"
             period="September 2025 - Present"
             description="Internal Member Archive + Hudson Valley Textile Project"
-            logo="/assets/images/hack4impact_logo.jfif"
+            logo="/assets/images/hack4impact_logo.jpg"
           />
           <ExperienceCard
             title="Software Engineering Intern"
             company="OurFreedom.ai"
             period="July 2025 - August 2025"
             description="User-Facing Pages"
-            logo="/assets/images/ourfreedom.ai_logo.jfif"
-
+            logo="/assets/images/ourfreedom.ai_logo.jpg"
           />
         </div>
       </div>
