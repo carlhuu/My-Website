@@ -3,6 +3,8 @@ import { getSong } from "./api/spotify";
 import { getLatestLichessGame } from "./api/lichess";
 import { getLatestRun } from "./api/strava";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const [song, lichess, run] = await Promise.all([
     getSong().catch(() => null),
