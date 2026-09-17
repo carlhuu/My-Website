@@ -16,12 +16,16 @@ export interface Track {
     songUrl: string;
 }
 
-const id = process.env.SPOTIFY_CLIENT_ID;
-const secret = process.env.SPOTIFY_CLIENT_SECRET;
-const refresh = process.env.SPOTIFY_REFRESH_TOKEN;
-
 // Get new access token using refresh token
 export const getAccessToken = async (): Promise<string> => {
+    const id = process.env.SPOTIFY_CLIENT_ID;
+    const secret = process.env.SPOTIFY_CLIENT_SECRET;
+    const refresh = process.env.SPOTIFY_REFRESH_TOKEN;
+
+    if (!id || !secret || !refresh) {
+        throw new Error('Spotify environment variables are not configured');
+    }
+
     const data = qs.stringify({
         grant_type: 'refresh_token',
         refresh_token: refresh

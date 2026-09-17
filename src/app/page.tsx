@@ -115,7 +115,7 @@ export default async function Home() {
                   ({lichess.timeAgo})
                 </>
               ) : (
-                "Loading game..."
+                "No recent games"
               )}
             </li>
             <li>
@@ -136,7 +136,7 @@ export default async function Home() {
                   ({run.timeAgo})
                 </>
               ) : (
-                "Loading run..."
+                "No recent runs"
               )}
             </li>
           </ul>

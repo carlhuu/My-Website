@@ -7,11 +7,15 @@ export interface StravaRun {
   timeAgo?: string; 
 }
 
-const id = process.env.STRAVA_CLIENT_ID;
-const secret = process.env.STRAVA_CLIENT_SECRET;
-const refresh = process.env.STRAVA_REFRESH_TOKEN;
-
 async function getAccessToken(): Promise<string> {
+  const id = process.env.STRAVA_CLIENT_ID;
+  const secret = process.env.STRAVA_CLIENT_SECRET;
+  const refresh = process.env.STRAVA_REFRESH_TOKEN;
+
+  if (!id || !secret || !refresh) {
+    throw new Error("Strava environment variables are not configured");
+  }
+
   const res = await axios.post("https://www.strava.com/oauth/token", null, {
     params: {
       client_id: id,
