@@ -13,7 +13,10 @@ export const getLatestLichessGame = async (username: string): Promise<LichessGam
     const response = await axios.get(
       `https://lichess.org/api/games/user/${username}?max=1&moves=false&tags=true&analyses=false`,
       {
-        headers: { Accept: "application/x-ndjson" },
+        headers: {
+          Accept: "application/x-ndjson",
+          "User-Agent": "carlhuu.vercel.app",
+        },
         responseType: "text"
       }
     );
